@@ -1,4 +1,5 @@
 import { Bell, Settings, User, LogOut, Globe } from "lucide-react";
+import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
@@ -10,6 +11,7 @@ import {
 import { Badge } from "@/components/ui/badge";
 
 const Header = () => {
+  const navigate = useNavigate();
   return (
     <header className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-50">
       <div className="flex h-16 items-center justify-between px-6">
@@ -66,7 +68,10 @@ const Header = () => {
                 Settings
               </DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem className="gap-2 text-destructive">
+              <DropdownMenuItem 
+                className="gap-2 text-destructive"
+                onClick={() => navigate('/')}
+              >
                 <LogOut className="h-4 w-4" />
                 Logout
               </DropdownMenuItem>

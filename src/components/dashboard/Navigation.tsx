@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { 
   BarChart3, 
   FileText, 
@@ -6,35 +5,39 @@ import {
   Plus,
   TrendingUp,
   Users,
-  Shield
+  Shield,
+  Home
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
+import { useNavigate, useLocation } from "react-router-dom";
 
 interface NavigationItem {
-  id: string;
+  path: string;
   label: string;
   icon: React.ComponentType<any>;
-  active?: boolean;
 }
 
 const navigationItems: NavigationItem[] = [
-  { id: "dashboard", label: "Dashboard", icon: BarChart3, active: true },
-  { id: "surveys", label: "Surveys", icon: FileText },
-  { id: "analytics", label: "Analytics", icon: TrendingUp },
-  { id: "respondents", label: "Respondents", icon: Users },
-  { id: "compliance", label: "Compliance", icon: Shield },
-  { id: "settings", label: "Settings", icon: Settings },
+  { path: "/dashboard", label: "Dashboard", icon: Home },
+  { path: "/surveys", label: "Surveys", icon: FileText },
+  { path: "/analytics", label: "Analytics", icon: TrendingUp },
+  { path: "/respondents", label: "Respondents", icon: Users },
+  { path: "/compliance", label: "Compliance", icon: Shield },
+  { path: "/settings", label: "Settings", icon: Settings },
 ];
 
 const Navigation = () => {
-  const [activeItem, setActiveItem] = useState("dashboard");
+  const navigate = useNavigate();
+  const location = useLocation();
 
   return (
     <nav className="w-64 border-r bg-card/30 backdrop-blur-sm">
       <div className="p-6">
-        <Button className="w-full gap-2 bg-gradient-primary shadow-glow hover:shadow-elegant"
+        <Button 
+          className="w-full gap-2 bg-gradient-primary shadow-glow hover:shadow-elegant"
           variant="gradient"
+          onClick={() => navigate('/surveys')}
         >
           <Plus className="h-4 w-4" />
           Create Survey
@@ -45,12 +48,12 @@ const Navigation = () => {
         <div className="space-y-1">
           {navigationItems.map((item) => {
             const Icon = item.icon;
-            const isActive = activeItem === item.id;
+            const isActive = location.pathname === item.path;
             
             return (
               <button
-                key={item.id}
-                onClick={() => setActiveItem(item.id)}
+                key={item.path}
+                onClick={() => navigate(item.path)}
                 className={cn(
                   "w-full flex items-center gap-3 px-3 py-2.5 text-sm font-medium rounded-lg transition-all duration-200",
                   isActive
