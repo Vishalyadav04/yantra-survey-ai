@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { Globe } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import {
@@ -7,24 +7,15 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-
-const languages = [
-  { code: "en", name: "English", nativeName: "English" },
-  { code: "hi", name: "Hindi", nativeName: "हिंदी" },
-  { code: "ta", name: "Tamil", nativeName: "தமிழ்" },
-  { code: "bn", name: "Bengali", nativeName: "বাংলা" },
-  { code: "te", name: "Telugu", nativeName: "తెలుగు" },
-  { code: "mr", name: "Marathi", nativeName: "मराठी" },
-  { code: "gu", name: "Gujarati", nativeName: "ગુજરાતી" },
-];
+import { useLanguage } from "@/contexts/LanguageContext";
 
 export const LanguageSelector = () => {
-  const [selectedLanguage, setSelectedLanguage] = useState(languages[0]);
+  const { currentLanguage, setLanguage, availableLanguages } = useLanguage();
+  
+  const selectedLanguage = availableLanguages.find(lang => lang.code === currentLanguage) || availableLanguages[0];
 
-  const handleLanguageChange = (language: typeof languages[0]) => {
-    setSelectedLanguage(language);
-    // Here you would implement actual translation logic
-    console.log(`Language changed to: ${language.name}`);
+  const handleLanguageChange = (language: typeof availableLanguages[0]) => {
+    setLanguage(language.code);
   };
 
   return (
@@ -36,7 +27,7 @@ export const LanguageSelector = () => {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-48">
-        {languages.map((language) => (
+        {availableLanguages.map((language) => (
           <DropdownMenuItem
             key={language.code}
             onClick={() => handleLanguageChange(language)}

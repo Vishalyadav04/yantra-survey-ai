@@ -1,4 +1,4 @@
-import { Bell, Settings, User, LogOut, Globe } from "lucide-react";
+import { Bell, Settings, User, LogOut } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,6 +9,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Badge } from "@/components/ui/badge";
+import { LanguageSelector } from "@/components/LanguageSelector";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -29,22 +30,7 @@ const Header = () => {
 
         <div className="flex items-center space-x-4">
           {/* Language Selector */}
-          <DropdownMenu>
-            <DropdownMenuTrigger asChild>
-              <Button variant="ghost" size="sm" className="gap-2">
-                <Globe className="h-4 w-4" />
-                English
-              </Button>
-            </DropdownMenuTrigger>
-            <DropdownMenuContent align="end">
-              <DropdownMenuItem>English</DropdownMenuItem>
-              <DropdownMenuItem>हिंदी (Hindi)</DropdownMenuItem>
-              <DropdownMenuItem>বাংলা (Bengali)</DropdownMenuItem>
-              <DropdownMenuItem>தமிழ் (Tamil)</DropdownMenuItem>
-              <DropdownMenuItem>తెలుగు (Telugu)</DropdownMenuItem>
-              <DropdownMenuItem>ಕನ್ನಡ (Kannada)</DropdownMenuItem>
-            </DropdownMenuContent>
-          </DropdownMenu>
+          <LanguageSelector />
 
           {/* Notifications */}
           <Button variant="ghost" size="sm" className="relative">

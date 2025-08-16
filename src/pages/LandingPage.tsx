@@ -1,35 +1,41 @@
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Users, BarChart3, Smartphone, Phone, Globe } from "lucide-react";
+import { ArrowRight, Users, BarChart3, Smartphone, Phone, Globe, Heart } from "lucide-react";
 import { useNavigate } from "react-router-dom";
+import { useLanguage } from "@/contexts/LanguageContext";
+import { LanguageSelector } from "@/components/LanguageSelector";
+import { SurveyModal } from "@/components/SurveyModal";
+import { useState } from "react";
 
 const LandingPage = () => {
   const navigate = useNavigate();
+  const { t } = useLanguage();
+  const [isSurveyModalOpen, setIsSurveyModalOpen] = useState(false);
 
   const features = [
     {
       icon: Users,
-      title: "Smart Survey Builder",
-      description: "AI-powered drag-and-drop survey creation with question suggestions"
+      title: t('smartSurveyBuilder'),
+      description: t('smartSurveyDesc')
     },
     {
       icon: Smartphone,
-      title: "WhatsApp Integration",
-      description: "Deploy surveys directly through WhatsApp for maximum reach"
+      title: t('whatsappIntegration'),
+      description: t('whatsappDesc')
     },
     {
       icon: Phone,
-      title: "IVR Support",
-      description: "Voice-based surveys through Interactive Voice Response"
+      title: t('ivrSupport'),
+      description: t('ivrDesc')
     },
     {
       icon: BarChart3,
-      title: "Real-time Analytics",
-      description: "Live dashboards with completion rates and response metrics"
+      title: t('realTimeAnalytics'),
+      description: t('analyticsDesc')
     },
     {
       icon: Globe,
-      title: "Multi-language Support",
-      description: "Auto-translate to Hindi, Tamil, Bengali and other Indian languages"
+      title: t('multiLanguageSupport'),
+      description: t('multiLanguageDesc')
     }
   ];
 
@@ -45,9 +51,12 @@ const LandingPage = () => {
               </div>
               <span className="text-xl font-bold text-foreground">Yantra</span>
             </div>
-            <Button variant="outline" onClick={() => navigate('/dashboard')}>
-              Sign In
-            </Button>
+            <div className="flex items-center gap-2">
+              <LanguageSelector />
+              <Button variant="outline" onClick={() => navigate('/dashboard')}>
+                {t('signIn')}
+              </Button>
+            </div>
           </div>
         </div>
       </header>
@@ -59,12 +68,11 @@ const LandingPage = () => {
           <div className="space-y-4">
             <h1 className="text-4xl sm:text-6xl font-bold text-foreground">
               <span className="bg-gradient-primary bg-clip-text text-transparent">
-                Sahi data, behtar disha
+                {t('landingTitle')}
               </span>
             </h1>
             <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              Correct data leads to better direction. Yantra is an AI-powered smart survey platform 
-              designed for accurate data collection and meaningful insights across India.
+              {t('landingSubtitle')}
             </p>
           </div>
 
@@ -76,7 +84,7 @@ const LandingPage = () => {
               onClick={() => navigate('/dashboard')}
               className="text-lg px-8 py-4 h-auto"
             >
-              Get Started
+              {t('getStarted')}
               <ArrowRight className="ml-2 h-5 w-5" />
             </Button>
           </div>
@@ -87,11 +95,10 @@ const LandingPage = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="text-center mb-16">
           <h2 className="text-3xl font-bold text-foreground mb-4">
-            Powerful Features for Smart Data Collection
+            {t('featuresTitle')}
           </h2>
           <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
-            Built for India's diverse landscape with support for multiple languages, 
-            channels, and verification methods including Aadhaar integration.
+            {t('featuresSubtitle')}
           </p>
         </div>
 
@@ -113,11 +120,64 @@ const LandingPage = () => {
         </div>
       </section>
 
+      {/* Sample Survey Section */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
+        <div className="text-center mb-12">
+          <h2 className="text-3xl font-bold text-foreground mb-4">
+            Try Our Survey Platform
+          </h2>
+          <p className="text-lg text-muted-foreground">
+            Experience our platform with this sample survey
+          </p>
+        </div>
+        
+        <div className="max-w-md mx-auto">
+          <div className="bg-card rounded-lg p-6 border border-border/40 hover:shadow-elegant transition-all duration-300">
+            <div className="flex items-center space-x-4 mb-4">
+              <div className="h-12 w-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                <Heart className="h-6 w-6 text-primary" />
+              </div>
+              <div>
+                <h3 className="text-xl font-semibold text-foreground">{t('sampleSurveyTitle')}</h3>
+                <p className="text-sm text-muted-foreground">{t('sampleSurveyDesc')}</p>
+              </div>
+            </div>
+            
+            <div className="flex gap-3">
+              <Button 
+                onClick={() => setIsSurveyModalOpen(true)}
+                className="flex-1"
+              >
+                {t('takeSurvey')}
+              </Button>
+              <Button 
+                variant="outline" 
+                onClick={() => {
+                  const surveyUrl = `${window.location.origin}/survey/health-wellness`;
+                  const message = `${t('sampleSurveyTitle')} - ${t('sampleSurveyDesc')} ${surveyUrl}`;
+                  const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+                  window.open(whatsappUrl, '_blank');
+                }}
+                className="flex-1"
+              >
+                {t('shareWhatsApp')}
+              </Button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Survey Modal */}
+      <SurveyModal 
+        isOpen={isSurveyModalOpen}
+        onClose={() => setIsSurveyModalOpen(false)}
+      />
+
       {/* Footer */}
       <footer className="border-t border-border/40 bg-muted/30">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <div className="text-center text-muted-foreground">
-            <p>&copy; 2024 Yantra. Empowering India with smart data collection.</p>
+            <p>&copy; 2024 Yantra. {t('footerText')}</p>
           </div>
         </div>
       </footer>
