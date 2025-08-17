@@ -6,7 +6,8 @@ import {
   TrendingUp,
   Users,
   Shield,
-  Home
+  Home,
+  PenTool
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
@@ -21,6 +22,7 @@ interface NavigationItem {
 const navigationItems: NavigationItem[] = [
   { path: "/dashboard", label: "Dashboard", icon: Home },
   { path: "/surveys", label: "Surveys", icon: FileText },
+  { path: "/survey-builder", label: "Survey Builder", icon: PenTool },
   { path: "/analytics", label: "Analytics", icon: TrendingUp },
   { path: "/respondents", label: "Respondents", icon: Users },
   { path: "/compliance", label: "Compliance", icon: Shield },
@@ -37,7 +39,7 @@ const Navigation = () => {
         <Button 
           className="w-full gap-2 bg-gradient-primary shadow-glow hover:shadow-elegant"
           variant="gradient"
-          onClick={() => navigate('/surveys')}
+          onClick={() => navigate('/survey-builder')}
         >
           <Plus className="h-4 w-4" />
           Create Survey
