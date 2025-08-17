@@ -5,6 +5,7 @@ import { Question } from '@/pages/SurveyBuilder';
 import { Card } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
+import { cn } from '@/lib/utils';
 import { 
   GripVertical, 
   Copy, 
@@ -99,7 +100,10 @@ export const QuestionCard = ({
             {Array.from({ length: question.maxRating || 5 }).map((_, idx) => (
               <Star 
                 key={idx} 
-                className="w-6 h-6 text-muted-foreground/30 hover:text-yellow-400 cursor-pointer" 
+                className={cn(
+                  "w-6 h-6 cursor-pointer",
+                  "text-muted-foreground/30"
+                )}
               />
             ))}
           </div>
