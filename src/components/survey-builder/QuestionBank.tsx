@@ -53,7 +53,7 @@ export const QuestionBank = ({ open, onOpenChange, surveyTitle, surveyDescriptio
       const res = await fetch('/functions/v1/generate-questions', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ title, description: desc, language }),
+        body: JSON.stringify({ title, description: desc, language: currentLanguage }),
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.error || 'Failed to generate');
