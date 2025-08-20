@@ -5,3 +5,9 @@ verify_jwt = false
 
 [functions.get-prefill-data]
 verify_jwt = false
+
+[functions.ai-validate-responses]
+verify_jwt = false
+
+[functions.ai-autocode-responses]
+verify_jwt = false

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Button } from '@/components/ui/button';
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
@@ -7,6 +7,9 @@ import { Textarea } from '@/components/ui/textarea';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Share2 } from 'lucide-react';
 import { toast } from '@/hooks/use-toast';
+import { Badge } from '@/components/ui/badge';
+import { useAIValidation } from '@/hooks/useAIValidation';
+import { useAutoCoding } from '@/hooks/useAutoCoding';
 
 interface SurveyModalProps {
   isOpen: boolean;
@@ -20,6 +23,29 @@ export const SurveyModal = ({ isOpen, onClose }: SurveyModalProps) => {
     health_concern: '',
     exercise_frequency: ''
   });
+
+  const { issues, consistencyScore, loading: valLoading, validate } = useAIValidation();
+  const { coded, loading: codeLoading, categorize } = useAutoCoding();
+
+  const schema = {
+    title: t('surveyTitle'),
+    questions: [
+      { id: 'health_rating', type: 'single-choice', title: t('question1'), required: true },
+      { id: 'health_concern', type: 'text', title: t('question2') },
+      { id: 'exercise_frequency', type: 'single-choice', title: t('question3'), required: true },
+    ],
+  };
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      validate(schema, answers);
+      const text = (answers.health_concern || '').trim();
+      if (text.length >= 10) {
+        categorize([text], undefined, 3);
+      }
+    }, 600);
+    return () => clearTimeout(timer);
+  }, [answers.health_rating, answers.health_concern, answers.exercise_frequency]);
 
   const handleSubmit = () => {
     toast({
@@ -50,8 +76,9 @@ export const SurveyModal = ({ isOpen, onClose }: SurveyModalProps) => {
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="max-w-2xl">
         <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-center">
+          <DialogTitle className="text-2xl font-bold text-center flex items-center justify-center gap-3">
             {t('surveyTitle')}
+            <Badge variant="secondary">Consistency: {Math.round(consistencyScore)}%</Badge>
           </DialogTitle>
         </DialogHeader>
         
@@ -80,6 +107,9 @@ export const SurveyModal = ({ isOpen, onClose }: SurveyModalProps) => {
                 <Label htmlFor="poor">{t('poor')}</Label>
               </div>
             </RadioGroup>
+            {issues.filter(i => i.questionId === 'health_rating').map(i => (
+              <p key={i.id} className="text-sm text-destructive">{i.message}</p>
+            ))}
           </div>
 
           {/* Question 2 */}
@@ -91,6 +121,16 @@ export const SurveyModal = ({ isOpen, onClose }: SurveyModalProps) => {
               onChange={(e) => setAnswers({...answers, health_concern: e.target.value})}
               className="min-h-20"
             />
+            {coded[0]?.categories?.length ? (
+              <div className="flex flex-wrap gap-2 pt-2">
+                {coded[0].categories.map((c, idx) => (
+                  <Badge key={idx} variant="outline">{c.label} • {(c.confidence * 100).toFixed(0)}%</Badge>
+                ))}
+              </div>
+            ) : null}
+            {issues.filter(i => i.questionId === 'health_concern').map(i => (
+              <p key={i.id} className="text-sm text-destructive">{i.message}</p>
+            ))}
           </div>
 
           {/* Question 3 */}
@@ -117,6 +157,9 @@ export const SurveyModal = ({ isOpen, onClose }: SurveyModalProps) => {
                 <Label htmlFor="rarely">Rarely or never</Label>
               </div>
             </RadioGroup>
+            {issues.filter(i => i.questionId === 'exercise_frequency').map(i => (
+              <p key={i.id} className="text-sm text-destructive">{i.message}</p>
+            ))}
           </div>
         </div>
 
