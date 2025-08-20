@@ -1,1 +1,7 @@
 project_id = "mggqklxjeraorishluty"
+
+[functions.upload-prefill-data]
+verify_jwt = false
+
+[functions.get-prefill-data]
+verify_jwt = false

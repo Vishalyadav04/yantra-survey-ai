@@ -3,13 +3,14 @@ import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useLanguage } from '@/contexts/LanguageContext';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, Save, Eye, Library } from 'lucide-react';
+import { ArrowLeft, Save, Eye, Library, Upload } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { QuestionTypeSidebar } from '@/components/survey-builder/QuestionTypeSidebar';
 import { SurveyCanvas } from '@/components/survey-builder/SurveyCanvas';
 import { PropertiesPanel } from '@/components/survey-builder/PropertiesPanel';
 import { toast } from 'sonner';
 import { QuestionBank } from '@/components/survey-builder/QuestionBank';
+import { PrefillUploadDialog } from '@/components/survey-builder/PrefillUploadDialog';
 
 export interface Question {
   id: string;
@@ -30,6 +31,7 @@ const SurveyBuilder = () => {
   const [surveyTitle, setSurveyTitle] = useState('Untitled Survey');
   const [surveyDescription, setSurveyDescription] = useState('');
   const [bankOpen, setBankOpen] = useState(false);
+  const [prefillUploadOpen, setPrefillUploadOpen] = useState(false);
 
   const addQuestion = (type: Question['type']) => {
     const newQuestion: Question = {
@@ -137,6 +139,10 @@ const SurveyBuilder = () => {
                 <Library className="h-4 w-4 mr-2" />
                 {t('Question Bank')}
               </Button>
+              <Button variant="secondary" onClick={() => setPrefillUploadOpen(true)}>
+                <Upload className="h-4 w-4 mr-2" />
+                {t('Prefill Data')}
+              </Button>
               <Button onClick={saveSurvey}>
                 <Save className="h-4 w-4 mr-2" />
                 {t('Save')}
@@ -173,6 +179,13 @@ const SurveyBuilder = () => {
           surveyTitle={surveyTitle}
           surveyDescription={surveyDescription}
           onAddQuestionTemplate={(tpl) => addQuestionFromTemplate(tpl)}
+        />
+
+        {/* Prefill Upload Dialog */}
+        <PrefillUploadDialog
+          isOpen={prefillUploadOpen}
+          onClose={() => setPrefillUploadOpen(false)}
+          surveyKey={surveyTitle.toLowerCase().replace(/\s+/g, '-')}
         />
       </div>
     </DndProvider>
