@@ -100,7 +100,7 @@ const SurveyBuilder = () => {
 
   return (
     <DndProvider backend={HTML5Backend}>
-      <div className="min-h-screen bg-gradient-to-br from-background to-secondary/10">
+      <div className="min-h-screen bg-gradient-yantra">
         {/* Header */}
         <header className="border-b bg-background/80 backdrop-blur-sm sticky top-0 z-50">
           <div className="flex items-center justify-between px-6 py-4">

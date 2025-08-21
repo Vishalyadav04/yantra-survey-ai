@@ -126,7 +126,7 @@ const Dashboard = () => {
     }
   };
   return (
-    <div className="min-h-screen bg-gradient-subtle">
+    <div className="min-h-screen bg-gradient-yantra">
       <Header />
       <div className="flex w-full">
         <Navigation />
