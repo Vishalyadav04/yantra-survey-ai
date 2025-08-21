@@ -12,6 +12,7 @@ const translations: Translations = {
   en: {
     // Landing Page
     landingTitle: "Sahi data, behtar disha",
+    hindiSlogan: "Your Voice, Our Tool",
     landingSubtitle: "Correct data leads to better direction. Yantra is an AI-powered smart survey platform designed for accurate data collection and meaningful insights across India.",
     getStarted: "Get Started",
     signIn: "Sign In",
@@ -62,6 +63,7 @@ const translations: Translations = {
   hi: {
     // Landing Page
     landingTitle: "सही डेटा, बेहतर दिशा",
+    hindiSlogan: "आपकी आवाज़, हमारा यंत्र",
     landingSubtitle: "सही डेटा से बेहतर दिशा मिलती है। यंत्र एक AI-संचालित स्मार्ट सर्वे प्लेटफॉर्म है जो भारत भर में सटीक डेटा संग्रह और सार्थक अंतर्दृष्टि के लिए डिज़ाइन किया गया है।",
     getStarted: "शुरू करें",
     signIn: "साइन इन",

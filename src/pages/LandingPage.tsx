@@ -5,6 +5,7 @@ import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { SurveyModal } from "@/components/SurveyModal";
 import { useState } from "react";
+import heroImage from "@/assets/hero-diversity-india.jpg";
 
 const LandingPage = () => {
   const navigate = useNavigate();
@@ -63,30 +64,51 @@ const LandingPage = () => {
 
       {/* Hero Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="text-center space-y-8">
-          {/* Main Slogan */}
-          <div className="space-y-4">
-            <h1 className="text-4xl sm:text-6xl font-bold text-foreground">
-              <span className="bg-gradient-primary bg-clip-text text-transparent">
-                {t('landingTitle')}
-              </span>
-            </h1>
-            <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-              {t('landingSubtitle')}
-            </p>
+        <div className="grid lg:grid-cols-2 gap-12 items-center">
+          {/* Content */}
+          <div className="text-center lg:text-left space-y-8">
+            {/* Main Slogan */}
+            <div className="space-y-4">
+              <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground">
+                <span className="bg-gradient-primary bg-clip-text text-transparent">
+                  {t('landingTitle')}
+                </span>
+              </h1>
+              
+              {/* Hindi Slogan */}
+              <div className="text-2xl sm:text-3xl font-semibold text-primary/80 italic">
+                "{t('hindiSlogan')}"
+              </div>
+              
+              <p className="text-xl text-muted-foreground max-w-2xl">
+                {t('landingSubtitle')}
+              </p>
+            </div>
+
+            {/* CTA Button */}
+            <div className="flex justify-center lg:justify-start">
+              <Button 
+                variant="gradient" 
+                size="lg" 
+                onClick={() => navigate('/dashboard')}
+                className="text-lg px-8 py-4 h-auto shadow-glow"
+              >
+                {t('getStarted')}
+                <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+            </div>
           </div>
 
-          {/* CTA Button */}
-          <div className="flex justify-center">
-            <Button 
-              variant="gradient" 
-              size="lg" 
-              onClick={() => navigate('/dashboard')}
-              className="text-lg px-8 py-4 h-auto"
-            >
-              {t('getStarted')}
-              <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+          {/* Hero Image */}
+          <div className="flex justify-center lg:justify-end">
+            <div className="relative">
+              <img 
+                src={heroImage}
+                alt="Diverse group of Indian people participating in digital surveys representing unity and inclusion"
+                className="w-full max-w-md lg:max-w-lg rounded-lg shadow-elegant hover:shadow-glow transition-shadow duration-300"
+              />
+              <div className="absolute inset-0 bg-gradient-primary opacity-5 rounded-lg"></div>
+            </div>
           </div>
         </div>
       </section>
