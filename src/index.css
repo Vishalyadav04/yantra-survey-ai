@@ -9,30 +9,31 @@ All colors MUST be HSL.
 @layer base {
   :root {
     --background: 210 11% 98%;
-    --foreground: 220 13% 15%;
+    --foreground: 222 47% 11%;
 
     --card: 0 0% 100%;
-    --card-foreground: 220 13% 15%;
+    --card-foreground: 222 47% 11%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 220 13% 15%;
+    --popover-foreground: 222 47% 11%;
 
-    --primary: 204 96% 27%;
+    --primary: 220 85% 35%;
     --primary-foreground: 0 0% 100%;
-    --primary-glow: 204 100% 35%;
+    --primary-glow: 220 90% 45%;
 
     --secondary: 210 40% 96%;
-    --secondary-foreground: 220 13% 15%;
+    --secondary-foreground: 222 47% 11%;
 
     --muted: 210 40% 96%;
     --muted-foreground: 220 13% 60%;
 
-    --accent: 215 100% 92%;
-    --accent-foreground: 204 96% 27%;
+    --accent: 25 95% 53%;
+    --accent-foreground: 0 0% 100%;
+    --accent-light: 25 95% 95%;
 
-    --success: 142 76% 36%;
+    --success: 138 62% 47%;
     --success-foreground: 0 0% 100%;
-    --success-light: 142 76% 95%;
+    --success-light: 138 62% 95%;
 
     --warning: 38 92% 50%;
     --warning-foreground: 0 0% 100%;
@@ -43,13 +44,13 @@ All colors MUST be HSL.
 
     --border: 220 13% 91%;
     --input: 220 13% 91%;
-    --ring: 204 96% 27%;
+    --ring: 220 85% 35%;
 
-    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--primary-glow)));
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
     --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--muted)));
-    --gradient-yantra: linear-gradient(135deg, hsl(320 25% 92%) 0%, hsl(320 20% 96%) 50%, hsl(240 15% 98%) 100%);
-    --shadow-elegant: 0 10px 30px -10px hsl(var(--primary) / 0.1);
-    --shadow-glow: 0 0 40px hsl(var(--primary-glow) / 0.15);
+    --gradient-yantra: linear-gradient(135deg, hsl(25 95% 90%) 0%, hsl(138 62% 90%) 30%, hsl(220 85% 90%) 70%, hsl(240 15% 98%) 100%);
+    --shadow-elegant: 0 10px 30px -10px hsl(var(--primary) / 0.15);
+    --shadow-glow: 0 0 40px hsl(var(--accent) / 0.2);
 
     --radius: 0.75rem;
 
@@ -71,33 +72,49 @@ All colors MUST be HSL.
   }
 
   .dark {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
+    --background: 222 47% 4%;
+    --foreground: 210 40% 95%;
 
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
+    --card: 220 25% 8%;
+    --card-foreground: 210 40% 95%;
 
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
+    --popover: 220 25% 8%;
+    --popover-foreground: 210 40% 95%;
 
-    --primary: 210 40% 98%;
-    --primary-foreground: 222.2 47.4% 11.2%;
+    --primary: 220 85% 65%;
+    --primary-foreground: 222 47% 4%;
+    --primary-glow: 220 90% 75%;
 
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
+    --secondary: 220 25% 12%;
+    --secondary-foreground: 210 40% 95%;
 
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
+    --muted: 220 25% 12%;
+    --muted-foreground: 215 20% 65%;
 
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --accent: 25 95% 65%;
+    --accent-foreground: 222 47% 4%;
+    --accent-light: 25 95% 15%;
 
-    --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
+    --success: 138 62% 55%;
+    --success-foreground: 222 47% 4%;
+    --success-light: 138 62% 12%;
 
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 212.7 26.8% 83.9%;
+    --warning: 38 92% 60%;
+    --warning-foreground: 222 47% 4%;
+    --warning-light: 38 92% 15%;
+
+    --destructive: 0 84% 65%;
+    --destructive-foreground: 222 47% 4%;
+
+    --border: 220 25% 15%;
+    --input: 220 25% 15%;
+    --ring: 220 85% 65%;
+
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    --gradient-subtle: linear-gradient(180deg, hsl(var(--background)), hsl(var(--muted)));
+    --gradient-yantra: linear-gradient(135deg, hsl(25 95% 15%) 0%, hsl(138 62% 15%) 30%, hsl(220 85% 15%) 70%, hsl(222 47% 8%) 100%);
+    --shadow-elegant: 0 10px 30px -10px hsl(var(--primary) / 0.25);
+    --shadow-glow: 0 0 40px hsl(var(--accent) / 0.3);
     --sidebar-background: 240 5.9% 10%;
     --sidebar-foreground: 240 4.8% 95.9%;
     --sidebar-primary: 224.3 76.3% 48%;
