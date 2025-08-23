@@ -11,3 +11,6 @@ verify_jwt = false
 
 [functions.ai-autocode-responses]
 verify_jwt = false
+
+[functions.ai-trust-score]
+verify_jwt = false
