@@ -13,19 +13,30 @@ export const WhatsAppIntegration = () => {
 
   const handleConnect = () => {
     if (phoneNumber) {
-      setIsConnected(true);
-      toast({
-        title: "WhatsApp Connected",
-        description: "Successfully connected to WhatsApp Business API",
-      });
+      // Simulate API call
+      setTimeout(() => {
+        setIsConnected(true);
+        toast({
+          title: "WhatsApp Connected",
+          description: `Successfully connected to WhatsApp Business API for ${phoneNumber}`,
+        });
+      }, 1000);
     }
   };
 
   const handleSendSurvey = () => {
+    // Simulate survey deployment
     toast({
-      title: "Survey Sent",
-      description: "Survey deployed via WhatsApp to selected contacts",
+      title: "Survey Deployment Started",
+      description: "Survey is being sent to WhatsApp contacts...",
     });
+    
+    setTimeout(() => {
+      toast({
+        title: "Survey Deployed Successfully",
+        description: "Survey sent to 247 WhatsApp contacts",
+      });
+    }, 2000);
   };
 
   return (
@@ -79,13 +90,23 @@ export const IVRIntegration = () => {
   const { toast } = useToast();
 
   const handleToggleIVR = () => {
-    setIsActive(!isActive);
+    // Simulate IVR system toggle
+    const newState = !isActive;
+    
     toast({
-      title: isActive ? "IVR Deactivated" : "IVR Activated",
-      description: isActive 
-        ? "Voice surveys are now offline" 
-        : "Voice surveys are now active",
+      title: newState ? "Activating IVR System..." : "Deactivating IVR System...",
+      description: "Processing request...",
     });
+
+    setTimeout(() => {
+      setIsActive(newState);
+      toast({
+        title: newState ? "IVR System Activated" : "IVR System Deactivated",
+        description: newState 
+          ? "Voice surveys are now live. Phone calls will be accepted." 
+          : "Voice surveys are offline. No new calls will be processed.",
+      });
+    }, 1500);
   };
 
   return (

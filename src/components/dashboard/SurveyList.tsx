@@ -16,6 +16,9 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
+import { useToast } from "@/components/ui/use-toast";
+import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 
 interface Survey {
   id: string;
@@ -124,18 +127,64 @@ const getStatusLabel = (status: Survey["status"]) => {
 };
 
 const SurveyList = () => {
+  const { toast } = useToast();
+  const navigate = useNavigate();
+  const [surveys, setSurveys] = useState<Survey[]>(dummySurveys);
+
+  const handleViewDetails = (survey: Survey) => {
+    toast({
+      title: "Viewing Survey Details",
+      description: `Opening details for "${survey.title}"`,
+    });
+    // Navigate to survey details or open modal
+  };
+
+  const handleEditSurvey = (survey: Survey) => {
+    navigate("/survey-builder", { state: { surveyId: survey.id, surveyData: survey } });
+    toast({
+      title: "Opening Survey Editor",
+      description: `Editing "${survey.title}"`,
+    });
+  };
+
+  const handleShareSurvey = (survey: Survey) => {
+    const shareUrl = `${window.location.origin}/survey/${survey.id}`;
+    if (navigator.share) {
+      navigator.share({
+        title: survey.title,
+        text: survey.description,
+        url: shareUrl,
+      });
+    } else {
+      navigator.clipboard.writeText(shareUrl);
+      toast({
+        title: "Share Link Copied",
+        description: "Survey link copied to clipboard",
+      });
+    }
+  };
+
+  const handleDeleteSurvey = (surveyId: string) => {
+    setSurveys(surveys.filter(s => s.id !== surveyId));
+    toast({
+      title: "Survey Deleted",
+      description: "Survey has been permanently deleted",
+      variant: "destructive",
+    });
+  };
+
   return (
     <div className="space-y-4">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold text-foreground">Your Surveys</h2>
         <div className="flex items-center gap-2 text-sm text-muted-foreground">
           <Users className="h-4 w-4" />
-          Total Responses: {dummySurveys.reduce((acc, survey) => acc + survey.responses, 0).toLocaleString()}
+          Total Responses: {surveys.reduce((acc, survey) => acc + survey.responses, 0).toLocaleString()}
         </div>
       </div>
 
       <div className="grid gap-4">
-        {dummySurveys.map((survey) => (
+        {surveys.map((survey) => (
           <Card key={survey.id} className="hover:shadow-elegant transition-shadow duration-200">
             <CardHeader className="pb-3">
               <div className="flex items-start justify-between">
@@ -158,20 +207,20 @@ const SurveyList = () => {
                     </Button>
                   </DropdownMenuTrigger>
                   <DropdownMenuContent align="end">
-                    <DropdownMenuItem className="gap-2">
+                    <DropdownMenuItem className="gap-2" onClick={() => handleViewDetails(survey)}>
                       <Eye className="h-4 w-4" />
                       View Details
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="gap-2">
+                    <DropdownMenuItem className="gap-2" onClick={() => handleEditSurvey(survey)}>
                       <Edit className="h-4 w-4" />
                       Edit Survey
                     </DropdownMenuItem>
-                    <DropdownMenuItem className="gap-2">
+                    <DropdownMenuItem className="gap-2" onClick={() => handleShareSurvey(survey)}>
                       <Share className="h-4 w-4" />
                       Share
                     </DropdownMenuItem>
                     <DropdownMenuSeparator />
-                    <DropdownMenuItem className="gap-2 text-destructive">
+                    <DropdownMenuItem className="gap-2 text-destructive" onClick={() => handleDeleteSurvey(survey.id)}>
                       <Trash2 className="h-4 w-4" />
                       Delete
                     </DropdownMenuItem>
