@@ -4,6 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { SurveyModal } from "@/components/SurveyModal";
+import { Scene3D } from "@/components/three/Scene3D";
 import { useState } from "react";
 import heroImage from "@/assets/hero-diversity-india.jpg";
 
@@ -66,7 +67,7 @@ const LandingPage = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
           {/* Content */}
-          <div className="text-center lg:text-left space-y-8">
+          <div className="text-center lg:text-left space-y-8 animate-fade-in">
             {/* Main Slogan */}
             <div className="space-y-4">
               <h1 className="text-4xl sm:text-5xl lg:text-6xl font-bold text-foreground">
@@ -91,7 +92,7 @@ const LandingPage = () => {
                 variant="gradient" 
                 size="lg" 
                 onClick={() => navigate('/dashboard')}
-                className="text-lg px-8 py-4 h-auto shadow-glow"
+                className="text-lg px-8 py-4 h-auto shadow-glow hover-scale"
               >
                 {t('getStarted')}
                 <ArrowRight className="ml-2 h-5 w-5" />
@@ -99,15 +100,23 @@ const LandingPage = () => {
             </div>
           </div>
 
-          {/* Hero Image */}
+          {/* 3D Scene */}
           <div className="flex justify-center lg:justify-end">
-            <div className="relative">
-              <img 
-                src={heroImage}
-                alt="Diverse group of Indian people participating in digital surveys representing unity and inclusion"
-                className="w-full max-w-md lg:max-w-lg rounded-lg shadow-elegant hover:shadow-glow transition-shadow duration-300"
-              />
-              <div className="absolute inset-0 bg-gradient-primary opacity-5 rounded-lg"></div>
+            <div className="relative w-full max-w-md lg:max-w-lg">
+              {/* 3D Background Animation */}
+              <div className="absolute inset-0 z-0">
+                <Scene3D variant="hero" height="500px" />
+              </div>
+              
+              {/* Hero Image Overlay */}
+              <div className="relative z-10 bg-background/80 backdrop-blur-sm rounded-lg p-4 shadow-elegant hover:shadow-glow transition-all duration-300">
+                <img 
+                  src={heroImage}
+                  alt="Diverse group of Indian people participating in digital surveys representing unity and inclusion"
+                  className="w-full rounded-lg opacity-90"
+                />
+                <div className="absolute inset-0 bg-gradient-primary opacity-5 rounded-lg"></div>
+              </div>
             </div>
           </div>
         </div>
@@ -115,7 +124,7 @@ const LandingPage = () => {
 
       {/* Features Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 animate-fade-in">
           <h2 className="text-3xl font-bold text-foreground mb-4">
             {t('featuresTitle')}
           </h2>
@@ -124,11 +133,25 @@ const LandingPage = () => {
           </p>
         </div>
 
+        {/* 3D Features Background */}
+        <div className="relative mb-12">
+          <div className="absolute inset-0 z-0">
+            <Scene3D variant="features" height="300px" />
+          </div>
+          <div className="relative z-10 bg-gradient-to-r from-background/90 via-background/50 to-background/90 backdrop-blur-sm rounded-lg p-8">
+            <div className="text-center">
+              <h3 className="text-2xl font-bold text-foreground mb-4">Powered by Advanced Technology</h3>
+              <p className="text-muted-foreground">Experience the future of survey collection with our interactive platform</p>
+            </div>
+          </div>
+        </div>
+
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, index) => (
             <div 
               key={index}
-              className="bg-card rounded-lg p-6 border border-border/40 hover:shadow-elegant transition-all duration-300"
+              className="bg-card/90 backdrop-blur-sm rounded-lg p-6 border border-border/40 hover:shadow-elegant transition-all duration-300 hover-scale animate-fade-in"
+              style={{ animationDelay: `${index * 100}ms` }}
             >
               <div className="flex items-center space-x-4 mb-4">
                 <div className="h-12 w-12 bg-primary/10 rounded-lg flex items-center justify-center">
@@ -144,7 +167,7 @@ const LandingPage = () => {
 
       {/* Sample Survey Section */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-        <div className="text-center mb-12">
+        <div className="text-center mb-12 animate-fade-in">
           <h2 className="text-3xl font-bold text-foreground mb-4">
             Try Our Survey Platform
           </h2>
@@ -153,37 +176,45 @@ const LandingPage = () => {
           </p>
         </div>
         
-        <div className="max-w-md mx-auto">
-          <div className="bg-card rounded-lg p-6 border border-border/40 hover:shadow-elegant transition-all duration-300">
-            <div className="flex items-center space-x-4 mb-4">
-              <div className="h-12 w-12 bg-primary/10 rounded-lg flex items-center justify-center">
-                <Heart className="h-6 w-6 text-primary" />
+        <div className="grid lg:grid-cols-2 gap-8 items-center">
+          {/* 3D Data Visualization */}
+          <div className="order-2 lg:order-1">
+            <Scene3D variant="data" height="400px" enableControls />
+          </div>
+          
+          {/* Survey Card */}
+          <div className="order-1 lg:order-2">
+            <div className="bg-card/90 backdrop-blur-sm rounded-lg p-6 border border-border/40 hover:shadow-elegant transition-all duration-300 hover-scale animate-scale-in">
+              <div className="flex items-center space-x-4 mb-4">
+                <div className="h-12 w-12 bg-primary/10 rounded-lg flex items-center justify-center">
+                  <Heart className="h-6 w-6 text-primary" />
+                </div>
+                <div>
+                  <h3 className="text-xl font-semibold text-foreground">{t('sampleSurveyTitle')}</h3>
+                  <p className="text-sm text-muted-foreground">{t('sampleSurveyDesc')}</p>
+                </div>
               </div>
-              <div>
-                <h3 className="text-xl font-semibold text-foreground">{t('sampleSurveyTitle')}</h3>
-                <p className="text-sm text-muted-foreground">{t('sampleSurveyDesc')}</p>
+              
+              <div className="flex gap-3">
+                <Button 
+                  onClick={() => setIsSurveyModalOpen(true)}
+                  className="flex-1 hover-scale"
+                >
+                  {t('takeSurvey')}
+                </Button>
+                <Button 
+                  variant="outline" 
+                  onClick={() => {
+                    const surveyUrl = `${window.location.origin}/survey/health-wellness`;
+                    const message = `${t('sampleSurveyTitle')} - ${t('sampleSurveyDesc')} ${surveyUrl}`;
+                    const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+                    window.open(whatsappUrl, '_blank');
+                  }}
+                  className="flex-1 hover-scale"
+                >
+                  {t('shareWhatsApp')}
+                </Button>
               </div>
-            </div>
-            
-            <div className="flex gap-3">
-              <Button 
-                onClick={() => setIsSurveyModalOpen(true)}
-                className="flex-1"
-              >
-                {t('takeSurvey')}
-              </Button>
-              <Button 
-                variant="outline" 
-                onClick={() => {
-                  const surveyUrl = `${window.location.origin}/survey/health-wellness`;
-                  const message = `${t('sampleSurveyTitle')} - ${t('sampleSurveyDesc')} ${surveyUrl}`;
-                  const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-                  window.open(whatsappUrl, '_blank');
-                }}
-                className="flex-1"
-              >
-                {t('shareWhatsApp')}
-              </Button>
             </div>
           </div>
         </div>
