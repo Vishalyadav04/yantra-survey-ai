@@ -16,7 +16,7 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
-import { useToast } from "@/components/ui/use-toast";
+import { useToast } from "@/hooks/use-toast";
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 
@@ -147,19 +147,35 @@ const SurveyList = () => {
     });
   };
 
-  const handleShareSurvey = (survey: Survey) => {
+  const handleShareSurvey = async (survey: Survey) => {
     const shareUrl = `${window.location.origin}/survey/${survey.id}`;
+    
+    // Try native sharing first, with proper error handling
     if (navigator.share) {
-      navigator.share({
-        title: survey.title,
-        text: survey.description,
-        url: shareUrl,
-      });
-    } else {
-      navigator.clipboard.writeText(shareUrl);
+      try {
+        await navigator.share({
+          title: survey.title,
+          text: survey.description,
+          url: shareUrl,
+        });
+        return; // Exit if sharing was successful
+      } catch (error) {
+        console.log('Native sharing failed, falling back to clipboard');
+      }
+    }
+    
+    // Fallback to clipboard
+    try {
+      await navigator.clipboard.writeText(shareUrl);
       toast({
         title: "Share Link Copied",
         description: "Survey link copied to clipboard",
+      });
+    } catch (error) {
+      // Final fallback - show the URL in a toast
+      toast({
+        title: "Share Survey",
+        description: `Share this link: ${shareUrl}`,
       });
     }
   };
