@@ -1,4 +1,5 @@
-# Welcome to your Lovable project
+# Welcome to Yantra : Samrt Suvrey Tool for Data Collection
+![image alt](https://github.com/Vishalyadav04/yantra-survey-ai/blob/4c811d1a67a5af891305e9c04c6e38e5da54f57b/main%20page.png)
 
 ## Project info
 
