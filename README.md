@@ -1,5 +1,8 @@
-# Welcome to Yantra : Samrt Suvrey Tool for Data Collection
+# Yantra : Smart Tool for Survey Data Collection
 ![image alt](https://github.com/Vishalyadav04/yantra-survey-ai/blob/4c811d1a67a5af891305e9c04c6e38e5da54f57b/main%20page.png)
+
+#Yantra Dashboard
+![image alt]([https://github.com/Vishalyadav04/yantra-survey-ai/blob/4c811d1a67a5af891305e9c04c6e38e5da54f57b/main%20page.png](https://github.com/Vishalyadav04/yantra-survey-ai/blob/9ac11f5c6d06c37d01c2a384d609bdbf37b08f72/dashboard.png))
 
 ## Project info
 
