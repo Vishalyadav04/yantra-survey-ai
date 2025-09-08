@@ -1,4 +1,5 @@
 # Yantra : Smart Tool for Survey Data Collection
+Demo Video : https://youtu.be/PgVj2WF-Vf0?si=FZSM8sQ7ZLaj0rZY
 ![image alt](https://github.com/Vishalyadav04/yantra-survey-ai/blob/4c811d1a67a5af891305e9c04c6e38e5da54f57b/main%20page.png)
 
 # Yantra Dashboard
